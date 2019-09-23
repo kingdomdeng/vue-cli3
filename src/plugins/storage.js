@@ -5,6 +5,32 @@ class storageCreater {
     this.storage = window[ type + "Storage" ];
   }
 
+  getAll(arr) {
+      let storage = this.storage;
+      let storage_pre = this.storage_pre;
+      let isArr = arr && Array.isArray(arr);
+      let len = isArr ? arr.length : storage.length;
+      let result = {};
+
+      for (let i = 0; i < len; i++) {
+          let item = arr ? arr[i] : storage.key(i);
+          let name = "";
+
+          if (isArr) {
+              name = arr[i];
+              result[name] = this.get(name);
+              continue;
+          }
+
+          if (item.indexOf(storage_pre) > -1) {
+              name = item.split(storage_pre)[1];
+              result[name] = this.get(name);
+          }
+      }
+
+      return result;
+  }
+
   get(name) {
     return this.storage.getItem(this.storage_pre + name);
   }
@@ -22,14 +48,14 @@ class storageCreater {
   }
 };
 
-(function() {
+export default(function() {
   var config = {
     defaultType: "local",
     storagePre: "",
   };
 
   var vueStorage = {
-    install: function(Vue, options) {
+    install: function(Vue, options = {}) {
       let defaultType = options.defaultType || config.defaultType;
       let storagePre = options.storagePre || config.storagePre;
       let storage = new storageCreater(defaultType, storagePre);
@@ -42,7 +68,9 @@ class storageCreater {
     },
   };
 
-  if (typeof exports == "object") {
+
+  // es6的导出不支持级联
+ /* if (typeof exports == "object") {
     module.exports = vueStorage;
   } else if (typeof define == "function" && define.amd) {
     define([], function() {
@@ -54,6 +82,7 @@ class storageCreater {
 
   if(typeof window!=="undefined"){
     window.$stotage = vueStorage;
-  }
+  }*/
 
+    return vueStorage;
 })();

@@ -39,6 +39,12 @@
             msg: String
         },
         mounted() {
+            this.$storage.set("test1", "test1");
+            this.$storage.set("test2", "test2");
+            this.$storage.set("test3", "test3");
+            this.$storage.session.set("test3", "test3");
+            this.$storage.session.set("test3", "test3");
+
             this.getData();
         },
         methods: {
