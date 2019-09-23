@@ -31,12 +31,31 @@
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+    import commonServices from "@/services/commonServices"
+
+    export default {
+        name: 'HelloWorld',
+        props: {
+            msg: String
+        },
+        mounted() {
+            this.getData();
+        },
+        methods: {
+            getData() {
+                let params = {
+                    "page":1,
+                    "size":5,
+                    "comtyId":"5c1aef3cbe077700081f96c2",
+                    "communityId":"5c1aef3cbe077700081f96c2"
+                };
+
+                commonServices.getArticleSet(params).then( res => {
+                    console.log(res);
+                });
+            }
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
