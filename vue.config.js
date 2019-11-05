@@ -14,6 +14,9 @@ module.exports = {
                 .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
         }*/
   },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? "/test"
+    : "/",
   devServer: {
     proxy: {
       "/api": {
