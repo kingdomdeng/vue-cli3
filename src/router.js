@@ -9,7 +9,20 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      child: [
+
+      ]
+    },
+    {
+      path: '/music',
+      name: 'music',
+      component: () => import('./views/music')
+    },
+    {
+      path: '/canvas',
+      name: 'canvas',
+      component: () => import('./views/canvas')
     },
     {
       path: '/about',

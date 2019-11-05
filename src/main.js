@@ -5,10 +5,12 @@ import store from './store'
 import './plugins/element.js'
 import storage from './plugins/storage.js'
 
+import './assets/css/base.scss'
+
 Vue.config.productionTip = false
 
 Vue.use(storage, {
-    storagePre: "KING"
+  storagePre: "KING"
 });
 
 new Vue({

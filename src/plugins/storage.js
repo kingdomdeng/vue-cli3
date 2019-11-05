@@ -6,29 +6,29 @@ class storageCreater {
   }
 
   getAll(arr) {
-      let storage = this.storage;
-      let storage_pre = this.storage_pre;
-      let isArr = arr && Array.isArray(arr);
-      let len = isArr ? arr.length : storage.length;
-      let result = {};
+    let storage = this.storage;
+    let storage_pre = this.storage_pre;
+    let isArr = arr && Array.isArray(arr);
+    let len = isArr ? arr.length : storage.length;
+    let result = {};
 
-      for (let i = 0; i < len; i++) {
-          let item = arr ? arr[i] : storage.key(i);
-          let name = "";
+    for (let i = 0; i < len; i++) {
+      let item = arr ? arr[i] : storage.key(i);
+      let name = "";
 
-          if (isArr) {
-              name = arr[i];
-              result[name] = this.get(name);
-              continue;
-          }
-
-          if (item.indexOf(storage_pre) > -1) {
-              name = item.split(storage_pre)[1];
-              result[name] = this.get(name);
-          }
+      if (isArr) {
+        name = arr[i];
+        result[name] = this.get(name);
+        continue;
       }
 
-      return result;
+      if (item.indexOf(storage_pre) > -1) {
+        name = item.split(storage_pre)[1];
+        result[name] = this.get(name);
+      }
+    }
+
+    return result;
   }
 
   get(name) {
@@ -46,7 +46,7 @@ class storageCreater {
   clear() {
     this.storage.clear();
   }
-};
+}
 
 export default(function() {
   var config = {
@@ -70,7 +70,7 @@ export default(function() {
 
 
   // es6的导出不支持级联
- /* if (typeof exports == "object") {
+  /* if (typeof exports == "object") {
     module.exports = vueStorage;
   } else if (typeof define == "function" && define.amd) {
     define([], function() {
@@ -84,5 +84,5 @@ export default(function() {
     window.$stotage = vueStorage;
   }*/
 
-    return vueStorage;
+  return vueStorage;
 })();

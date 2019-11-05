@@ -1,68 +1,82 @@
 <template>
-  <div class="d-dialog" v-show="isShow" @click="close">
-    <div class="container" @click.stop>
-      <div class="title">{{ title }}</div>
-      <div class="content">{{ content }}</div>
+  <div
+    class="d-dialog"
+    v-show="isShow"
+    @click="close"
+  >
+    <div
+      class="container"
+      @click.stop
+    >
+      <div class="title">
+        {{ title }}
+      </div>
+      <div class="content">
+        {{ content }}
+      </div>
       <div class="bottom">
         <span @click="close">{{ cancelBtn }}</span>
-        <span class="primary" @click="confirm">{{ confirmBtn }}</span>
+        <span
+          class="primary"
+          @click="confirm"
+        >{{ confirmBtn }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { commonMixin } from "~/mixins";
+import { commonMixin } from "~/mixins";
 
-  export default {
-    mixins: [commonMixin],
-    props: {
-      cancelBtn: {
-        type: String,
-        default: "取消"
-      },
-      confirmBtn: {
-        type: String,
-        default: "确定"
-      },
-      title: {
-        type: String,
-        default: ""
-      },
-      option: Object,
+export default {
+  mixins: [commonMixin],
+  props: {
+    cancelBtn: {
+      type: String,
+      default: "取消"
     },
-    data() {
-      return {
-        isShow: false,
-        content: ""
-      };
+    confirmBtn: {
+      type: String,
+      default: "确定"
     },
-    methods: {
-      open(params) {
-        if (typeof params == "string") {
-          this.content = params;
-        }
-
-        if (typeof params == "object") {
-          this.content = params.content;
-        }
-
-        this.isShow = true;
-        this.$emit("open");
-      },
-      close() {
-        this.isShow = false;
-        this.$emit("close");
-        Object.assign(this.$data, this.$options.data());// 重置数据
-      },
-      confirm() {
-        this.$emit("confirm");
-      },
-      cancel() {
-        this.$emit("cancel");
+    title: {
+      type: String,
+      default: ""
+    },
+    option: Object,
+  },
+  data() {
+    return {
+      isShow: false,
+      content: ""
+    };
+  },
+  methods: {
+    open(params) {
+      if (typeof params == "string") {
+        this.content = params;
       }
+
+      if (typeof params == "object") {
+        this.content = params.content;
+      }
+
+      this.isShow = true;
+      this.$emit("open");
+    },
+    close() {
+      this.isShow = false;
+      this.$emit("close");
+      Object.assign(this.$data, this.$options.data());// 重置数据
+    },
+    confirm() {
+      this.$emit("confirm");
+    },
+    cancel() {
+      this.$emit("cancel");
     }
-  };
+  }
+};
 
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <m-header title="直播"></m-header>
+    <m-header title="直播" />
 
     <div class="liveVideo">
       <no-ssr placeholder="Loading...">
@@ -10,99 +10,97 @@
           ref="videoPlayer"
           :options="playerOptions"
           @ready="setVideo"
-        >
-        </video-player>
+        />
       </no-ssr>
     </div>
-
   </section>
 </template>
 
 <script>
-  import Vue from "Vue";
-  import { commonMixin } from "~/mixins";
-  import header from "~/components/header.vue";
-  import articleService from "~/services/articleService.js";
-  import VideoOverly from "./components/videoOverly";
+import Vue from "Vue";
+import { commonMixin } from "~/mixins";
+import header from "~/components/header.vue";
+import articleService from "~/services/articleService.js";
+import VideoOverly from "./components/videoOverly";
 
-  export default {
-    mixins: [commonMixin],
-    provide() {
-      return {
-        liveVideo: this
-      };
-    },
-    components: {
-      mHeader: header,
-    },
-    async asyncData({ route, redirect, store, query}) {
-      // 获取视频详情
-      let articleInfo = {};
-      let res = await articleService.findVideoById({ id: route.params.id });
+export default {
+  mixins: [commonMixin],
+  provide() {
+    return {
+      liveVideo: this
+    };
+  },
+  components: {
+    mHeader: header,
+  },
+  async asyncData({ route, redirect, store, query}) {
+    // 获取视频详情
+    let articleInfo = {};
+    let res = await articleService.findVideoById({ id: route.params.id });
 
-      if (res.status == 200 && res.data) {
-        articleInfo = res.data;
-      }
-
-      return {
-        articleInfo,
-      };
-    },
-    data() {
-      return {
-        videoPlayer: null,
-        playerOptions: {
-          playbackRates: [0.7, 1.0, 1.5, 2.0],
-          sources: {
-            type: "video/mp4",
-            src: ""
-          },
-          poster: "", // 封面图
-        },
-      };
-    },
-    computed: {
-
-    },
-    watch: {
-
-    },
-    created() {
-      this.pid = this.$route.params.id;
-      this.playerOptions.sources.src = this.articleInfo.url;
-      this.playerOptions.poster = this.articleInfo.cover;
-
-      this.$nextTick( () => {
-        this.videoPlayer = this.$refs.videoPlayer;
-      });
-    },
-    mounted() {
-      this.$nextTick( () => {
-        this.setComponent("vjs_video_3");
-      });
-    },
-    methods: {
-      setVideo() {
-
-      },
-      setComponent(el) {
-        let video = document.getElementById(el);
-        let content = document.createElement("div");
-
-        content.id = "live-video-content";
-        video.appendChild(content);
-
-        const videoOverly = Vue.extend(VideoOverly);
-        console.log( new videoOverly());
-        new videoOverly().$mount("#live-video-content");// 创建并挂载到 #live-video-content (会替换 #live-video-content)
-      }
-    },
-    head() {
-      return {
-        title: "直播"
-      };
+    if (res.status == 200 && res.data) {
+      articleInfo = res.data;
     }
-  };
+
+    return {
+      articleInfo,
+    };
+  },
+  data() {
+    return {
+      videoPlayer: null,
+      playerOptions: {
+        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        sources: {
+          type: "video/mp4",
+          src: ""
+        },
+        poster: "", // 封面图
+      },
+    };
+  },
+  computed: {
+
+  },
+  watch: {
+
+  },
+  created() {
+    this.pid = this.$route.params.id;
+    this.playerOptions.sources.src = this.articleInfo.url;
+    this.playerOptions.poster = this.articleInfo.cover;
+
+    this.$nextTick( () => {
+      this.videoPlayer = this.$refs.videoPlayer;
+    });
+  },
+  mounted() {
+    this.$nextTick( () => {
+      this.setComponent("vjs_video_3");
+    });
+  },
+  methods: {
+    setVideo() {
+
+    },
+    setComponent(el) {
+      let video = document.getElementById(el);
+      let content = document.createElement("div");
+
+      content.id = "live-video-content";
+      video.appendChild(content);
+
+      const videoOverly = Vue.extend(VideoOverly);
+      console.log( new videoOverly());
+      new videoOverly().$mount("#live-video-content");// 创建并挂载到 #live-video-content (会替换 #live-video-content)
+    }
+  },
+  head() {
+    return {
+      title: "直播"
+    };
+  }
+};
 
 </script>
 
