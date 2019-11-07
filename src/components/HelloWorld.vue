@@ -1,21 +1,22 @@
 <template>
-  <div class="hello">
+  <div>{{ msg }}</div>
+  <!--<div class="hello">
     <el-button @click="changText">
       hello
     </el-button>
-  </div>
+  </div>-->
 </template>
 
 <script>
-import commonServices from "@/services/commonServices";
-import eventBus from "../utils/eventBus";
+// import commonServices from "@/services/commonServices";
+// import eventBus from "../utils/eventBus";
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
-  created() {
+  /*created() {
     console.log("##child");
   },
   beforeMount() {
@@ -47,7 +48,7 @@ export default {
         console.log(res);
       });
     }
-  }
+  }*/
 }
 </script>
 
